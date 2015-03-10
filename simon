@@ -1,0 +1,55 @@
+int secuencia[100];
+int recorrer = 0;
+int maxr = 0;
+
+void setup() {
+  for(int i = 0; i < 100; i++){
+    secuencia[i] = 2 + random(4);
+  }
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, INPUT);
+  pinMode(7, INPUT);
+  pinMode(8, INPUT);
+  pinMode(9, INPUT);
+}
+
+void loop() {
+  int s = getSecuencia();
+  digitalWrite(s, HIGH);
+  delay(500);
+  digitalWrite(s, LOW);
+  delay(2000);
+  if(digitalRead(s+4)){
+    recorrerSecuencia();
+  }else{
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    delay(1000);
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    for(int i = 0; i < 100; i++){
+      secuencia[i] = 2 + random(4);
+    }
+    maxr = 1;
+    recorrer = 0;
+  }
+  delay(2000);
+}
+int getSecuencia(){
+  return secuencia[recorrer];
+}
+
+void recorrerSecuencia(){
+  recorrer++;
+  if(recorrer > maxr){
+    maxr++;
+    recorrer = 0;
+  }
+}
