@@ -1,0 +1,36 @@
+#include <SoftwareSerial.h>
+
+#define RxD 10
+#define TxD 11
+
+char letra;
+SoftwareSerial BTSerial(TxD, RxD);
+void setup()
+{
+  pinMode(6,OUTPUT);
+  pinMode(9, OUTPUT);
+  digitalWrite(9, HIGH);
+  BTSerial.flush();
+  BTSerial.begin(38400);
+  Serial.begin(9600);
+  Serial.println("Enter AT commands:");
+
+}
+
+void loop()
+{
+  if (BTSerial.available())
+  letra = BTSerial.read();
+    if(letra == 'A'){
+      digitalWrite(6, HIGH);
+      Serial.write(letra);
+    }else if(letra == 'B'){
+      digitalWrite(6, LOW);
+      Serial.write(letra);
+    }else if(letra == ' '){
+    
+    }
+  letra =' ';
+  if (Serial.available())
+    BTSerial.write(Serial.read());
+}
